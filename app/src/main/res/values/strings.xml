@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ChargerPoints</string>
+
+    <string name="title_coupons">Coupons</string>
+
+    <string name="title_help">Help</string>
+
+    <string name="title_individual_coupon">Individual Coupon</string>
+
+    <string name="title_my_deals">My Deals</string>
+
+    <string name="title_redeemed_coupon">Redeemed Coupon</string>
+
+
+</resources>
