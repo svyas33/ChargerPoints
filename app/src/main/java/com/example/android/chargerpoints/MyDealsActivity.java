@@ -39,8 +39,6 @@ public class MyDealsActivity extends AppCompatActivity {
         ListView listview = (ListView)findViewById(R.id.list);
         listview.setAdapter(adapter);
 
-        int tester;
-        int tester2;
     }
 
 
