@@ -40,6 +40,7 @@ public class MyDealsActivity extends AppCompatActivity {
         listview.setAdapter(adapter);
 
         int tester;
+        int tester2;
     }
 
 
