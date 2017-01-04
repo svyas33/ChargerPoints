@@ -1,6 +1,5 @@
 package com.example.android.chargerpoints;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
@@ -39,6 +38,8 @@ public class MyDealsActivity extends AppCompatActivity {
         CouponAdapter adapter = new CouponAdapter(this, myDeals);
         ListView listview = (ListView)findViewById(R.id.list);
         listview.setAdapter(adapter);
+
+        int tester;
     }
 
 
