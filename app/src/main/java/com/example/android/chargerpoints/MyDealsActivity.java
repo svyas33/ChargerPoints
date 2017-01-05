@@ -1,6 +1,5 @@
 package com.example.android.chargerpoints;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
@@ -15,6 +14,10 @@ public class MyDealsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_deals);
 
         ArrayList<Coupon> myDeals = new ArrayList<Coupon>();
+
+        if(getActionBar() != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         myDeals.add(new Coupon("$10 off $25!", "JCPenney's",
                 "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
@@ -39,6 +42,7 @@ public class MyDealsActivity extends AppCompatActivity {
         CouponAdapter adapter = new CouponAdapter(this, myDeals);
         ListView listview = (ListView)findViewById(R.id.list);
         listview.setAdapter(adapter);
+
     }
 
 
