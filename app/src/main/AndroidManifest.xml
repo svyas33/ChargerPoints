@@ -15,7 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--exported attribute allows to run this activity without going through the launcher for testing purposes-->
         <activity android:name=".CouponsActivity"
+            android:exported="true"
             android:label="@string/title_coupons"/>
         <activity android:name=".MyDealsActivity"
             android:label="@string/title_my_deals"/>
