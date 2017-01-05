@@ -79,6 +79,7 @@ public class CouponsActivity extends AppCompatActivity {
     public static class OtherCouponsFragment extends Fragment {
 
         public OtherCouponsFragment(){
+
         }
 
 
