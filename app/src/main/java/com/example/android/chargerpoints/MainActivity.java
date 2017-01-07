@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         TextView couponsTextView = (TextView) findViewById(R.id.coupons);
         couponsTextView.setOnClickListener(new View.OnClickListener() {
-            // The code in this method will be executed when the numbers View is clicked on.
             @Override
             public void onClick(View view) {
                 Intent couponsIntent = new Intent(MainActivity.this, CouponsActivity.class);
@@ -25,10 +24,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        setContentView(R.layout.activity_main);
         TextView helpTextView = (TextView) findViewById(R.id.help);
         helpTextView.setOnClickListener(new View.OnClickListener() {
-            // The code in this method will be executed when the numbers View is clicked on.
             @Override
             public void onClick(View view) {
                 Intent helpIntent = new Intent(MainActivity.this, HelpActivity.class);
@@ -36,10 +33,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        setContentView(R.layout.activity_main);
         TextView myDealsTextView = (TextView) findViewById(R.id.myDeals);
         myDealsTextView.setOnClickListener(new View.OnClickListener() {
-            // The code in this method will be executed when the numbers View is clicked on.
             @Override
             public void onClick(View view) {
                 Intent myDealsIntent = new Intent(MainActivity.this, MyDealsActivity.class);
