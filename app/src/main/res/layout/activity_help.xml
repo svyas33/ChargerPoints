@@ -130,18 +130,6 @@
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BACK"
-        android:background="#42a1f5"
-        android:textColor="#ffffff"
-        android:padding="8dp"
-        android:id="@+id/back"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/textView8" />
 
 
 </RelativeLayout>
