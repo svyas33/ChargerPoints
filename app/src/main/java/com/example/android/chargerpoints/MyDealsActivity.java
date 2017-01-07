@@ -13,11 +13,11 @@ public class MyDealsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_deals);
 
-        ArrayList<Coupon> myDeals = new ArrayList<Coupon>();
-
         if(getActionBar() != null) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        ArrayList<Coupon> myDeals = new ArrayList<Coupon>();
 
         myDeals.add(new Coupon("$10 off $25!", "JCPenney's",
                 "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",

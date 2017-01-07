@@ -16,18 +16,46 @@
             </intent-filter>
         </activity>
 
-        <!--exported attribute allows to run this activity without going through the launcher for testing purposes-->
         <activity android:name=".CouponsActivity"
-            android:exported="true"
-            android:label="@string/title_coupons"/>
+            android:label="@string/title_coupons"
+            android:parentActivityName = ".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+
         <activity android:name=".MyDealsActivity"
-            android:label="@string/title_my_deals"/>
+            android:label="@string/title_my_deals"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+
         <activity android:name=".IndividualCouponActivity"
-            android:label="@string/title_individual_coupon"/>
+            android:label="@string/title_individual_coupon"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+
         <activity android:name=".HelpActivity"
-            android:label="@string/title_help"/>
+            android:label="@string/title_help"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+
         <activity android:name=".RedeemedCouponActivity"
-            android:label="@string/title_redeemed_coupon"></activity>
+            android:label="@string/title_redeemed_coupon"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+
     </application>
 
 </manifest>
