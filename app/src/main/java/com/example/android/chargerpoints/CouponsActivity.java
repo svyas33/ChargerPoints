@@ -11,7 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class CouponsActivity extends AppCompatActivity {
 
@@ -53,8 +56,34 @@ public class CouponsActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.food_fragment_layout, container, false);
-            TextView foodTextView = (TextView) rootView.findViewById(R.id.section_label);
-            foodTextView.setText("yummy");
+
+
+            ArrayList<Coupon> foodCoupons = new ArrayList<Coupon>();
+
+            foodCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            foodCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            foodCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            foodCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            foodCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            CouponAdapter adapter = new CouponAdapter(/*!!!!!!!!!!!!!!!!!!*/, foodCoupons);
+            ListView listview = (ListView)rootView.findViewById(R.id.list);
+            listview.setAdapter(adapter);
+
             return rootView;
         }
 
