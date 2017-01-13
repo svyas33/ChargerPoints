@@ -54,7 +54,7 @@ public class CouponsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.word_list, container, false);
+            View rootView = inflater.inflate(R.layout.coupon_list, container, false);
 
 
             ArrayList<Coupon> foodCoupons = new ArrayList<Coupon>();
@@ -98,7 +98,7 @@ public class CouponsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.word_list, container, false);
+            View rootView = inflater.inflate(R.layout.coupon_list, container, false);
 
             ArrayList<Coupon> entertainmentCoupons = new ArrayList<Coupon>();
 
@@ -141,7 +141,7 @@ public class CouponsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.word_list, container, false);
+            View rootView = inflater.inflate(R.layout.coupon_list, container, false);
 
             ArrayList<Coupon> otherCoupons = new ArrayList<Coupon>();
 

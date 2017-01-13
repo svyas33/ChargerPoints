@@ -11,7 +11,7 @@ public class MyDealsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
+        setContentView(R.layout.coupon_list);
 
         if(getActionBar() != null) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
