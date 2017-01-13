@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -55,7 +54,7 @@ public class CouponsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.food_fragment_layout, container, false);
+            View rootView = inflater.inflate(R.layout.word_list, container, false);
 
 
             ArrayList<Coupon> foodCoupons = new ArrayList<Coupon>();
@@ -80,9 +79,10 @@ public class CouponsActivity extends AppCompatActivity {
                     "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
                     15, R.drawable.jcplogo, R.drawable.jcpqr));
 
-            CouponAdapter adapter = new CouponAdapter(/*!!!!!!!!!!!!!!!!!!*/, foodCoupons);
+            CouponAdapter adapter = new CouponAdapter(getActivity(), foodCoupons);
             ListView listview = (ListView)rootView.findViewById(R.id.list);
             listview.setAdapter(adapter);
+
 
             return rootView;
         }
@@ -98,9 +98,34 @@ public class CouponsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.entertainment_fragment_layout, container, false);
-            TextView entertainmentTextView = (TextView) rootView.findViewById(R.id.section_label);
-            entertainmentTextView.setText("cool");
+            View rootView = inflater.inflate(R.layout.word_list, container, false);
+
+            ArrayList<Coupon> entertainmentCoupons = new ArrayList<Coupon>();
+
+            entertainmentCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            entertainmentCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            entertainmentCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            entertainmentCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            entertainmentCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            CouponAdapter adapter = new CouponAdapter(getActivity(), entertainmentCoupons);
+            ListView listview = (ListView)rootView.findViewById(R.id.list);
+            listview.setAdapter(adapter);
+
             return rootView;
         }
 
@@ -116,9 +141,34 @@ public class CouponsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.other_fragment_layout, container, false);
-            TextView otherTextView = (TextView) rootView.findViewById(R.id.section_label);
-            otherTextView.setText("wow");
+            View rootView = inflater.inflate(R.layout.word_list, container, false);
+
+            ArrayList<Coupon> otherCoupons = new ArrayList<Coupon>();
+
+            otherCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            otherCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            otherCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            otherCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            otherCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
+                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
+                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+
+            CouponAdapter adapter = new CouponAdapter(getActivity(), otherCoupons);
+            ListView listview = (ListView)rootView.findViewById(R.id.list);
+            listview.setAdapter(adapter);
+
             return rootView;
         }
 
