@@ -2,6 +2,8 @@ package com.example.android.chargerpoints;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,9 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import static com.example.android.chargerpoints.R.layout.coupon_list;
 
 public class CouponsActivity extends AppCompatActivity {
 
@@ -54,7 +59,7 @@ public class CouponsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.coupon_list, container, false);
+            View rootView = inflater.inflate(coupon_list, container, false);
 
 
             ArrayList<Coupon> foodCoupons = new ArrayList<Coupon>();
@@ -84,12 +89,14 @@ public class CouponsActivity extends AppCompatActivity {
             listview.setAdapter(adapter);
 
 
+
             return rootView;
         }
 
     }
 
     public static class EntertainmentCouponsFragment extends Fragment {
+
 
         public EntertainmentCouponsFragment(){
         }
@@ -98,9 +105,9 @@ public class CouponsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.coupon_list, container, false);
+            View rootView = inflater.inflate(coupon_list, container, false);
 
-            ArrayList<Coupon> entertainmentCoupons = new ArrayList<Coupon>();
+            final ArrayList<Coupon> entertainmentCoupons = new ArrayList<Coupon>();
 
             entertainmentCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
                     "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
@@ -123,11 +130,14 @@ public class CouponsActivity extends AppCompatActivity {
                     15, R.drawable.jcplogo, R.drawable.jcpqr));
 
             CouponAdapter adapter = new CouponAdapter(getActivity(), entertainmentCoupons);
-            ListView listview = (ListView)rootView.findViewById(R.id.list);
-            listview.setAdapter(adapter);
+            ListView listView = (ListView)rootView.findViewById(R.id.list);
+            listView.setAdapter(adapter);
+
+
 
             return rootView;
         }
+
 
     }
 
@@ -141,7 +151,7 @@ public class CouponsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.coupon_list, container, false);
+            View rootView = inflater.inflate(coupon_list, container, false);
 
             ArrayList<Coupon> otherCoupons = new ArrayList<Coupon>();
 
