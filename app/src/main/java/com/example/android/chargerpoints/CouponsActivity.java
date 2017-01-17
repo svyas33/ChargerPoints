@@ -1,10 +1,8 @@
 package com.example.android.chargerpoints;
 
 import android.app.ActionBar;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,13 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import android.widget.TextView;
-import android.support.design.widget.TabLayout;
 import java.util.ArrayList;
-import android.widget.ListView;
 
 import static com.example.android.chargerpoints.R.layout.coupon_list;
 
@@ -132,11 +126,9 @@ public class CouponsActivity extends AppCompatActivity {
             ListView listView = (ListView)rootView.findViewById(R.id.list);
             listView.setAdapter(adapter);
 
-
-
+            
             return rootView;
         }
-
     }
 
     public static class OtherCouponsFragment extends Fragment {
