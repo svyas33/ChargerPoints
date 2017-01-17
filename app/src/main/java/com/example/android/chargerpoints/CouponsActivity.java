@@ -16,7 +16,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import android.widget.TextView;
+import android.support.design.widget.TabLayout;
 import java.util.ArrayList;
+import android.widget.ListView;
 
 import static com.example.android.chargerpoints.R.layout.coupon_list;
 
@@ -37,18 +40,16 @@ public class CouponsActivity extends AppCompatActivity {
 
         ActionBar bar = getActionBar();
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager)(findViewById(R.id.pager));
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        tabLayout.setupWithViewPager(mViewPager);
     }
 
 
-    //IGNORE - used for action bar, might remove eventually
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
+
 
     public static class FoodCouponsFragment extends Fragment {
 
@@ -89,14 +90,12 @@ public class CouponsActivity extends AppCompatActivity {
             listview.setAdapter(adapter);
 
 
-
             return rootView;
         }
 
     }
 
     public static class EntertainmentCouponsFragment extends Fragment {
-
 
         public EntertainmentCouponsFragment(){
         }
@@ -137,7 +136,6 @@ public class CouponsActivity extends AppCompatActivity {
 
             return rootView;
         }
-
 
     }
 
@@ -207,6 +205,20 @@ public class CouponsActivity extends AppCompatActivity {
 
         public int getCount() {
             return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Food";
+                case 1:
+                    return "Entertainment";
+                case 2:
+                    return "Other";
+                default:
+                    return null;
+            }
         }
 
 
