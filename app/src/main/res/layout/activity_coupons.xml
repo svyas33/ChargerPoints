@@ -5,11 +5,7 @@
 
     <!-- BEGIN_INCLUDE (view_pager_layout) -->
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"/>
+
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
