@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+
+
 import java.util.ArrayList;
 
 import static com.example.android.chargerpoints.R.layout.coupon_list;
