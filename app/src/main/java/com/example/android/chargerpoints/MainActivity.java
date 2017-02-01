@@ -25,10 +25,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Find view
         TextView helpTextView = (TextView) findViewById(R.id.help);
+        //Set click listener on view
         helpTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Execute when view is clicked on
                 Intent helpIntent = new Intent(MainActivity.this, HelpActivity.class);
                 startActivity(helpIntent);
             }

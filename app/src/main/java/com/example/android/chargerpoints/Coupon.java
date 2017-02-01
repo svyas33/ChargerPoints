@@ -1,10 +1,12 @@
 package com.example.android.chargerpoints;
 
+import java.io.Serializable;
+
 /**
  * Created by 17svyas on 12/8/2016.
  */
 
-public class Coupon {
+public class Coupon implements Serializable {
 
     private String companyName;
     private String description;
@@ -14,12 +16,14 @@ public class Coupon {
     private int qrImageResourceId;
 
     public Coupon(String couponVal, String coName, String descrip, int points, int picId, int qrId){
+
         couponValue = couponVal;
         companyName = coName;
         description = descrip;
         pts = points;
         picImageResourceId = picId;
         qrImageResourceId = qrId;
+
     }
 
     public String getCompanyName(){ return companyName; }
