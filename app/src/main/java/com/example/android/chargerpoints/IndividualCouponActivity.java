@@ -52,31 +52,38 @@ public class IndividualCouponActivity extends AppCompatActivity {
                 ImageView qrImg = (ImageView) findViewById(R.id.qr_imageview);
                 qrImg.setImageResource(coupon.getQrImageResourceId());
 
+                //sets text to use now when the activity is mydeals
                 Button redeemBtn = (Button) findViewById(R.id.redeem_button);
-                redeemBtn.setVisibility(View.INVISIBLE);
-                redeemBtn.setEnabled(false);
+                redeemBtn.setText("USE NOW");
             }
         } finally {
             realm.close();
         }
 
-        Button redeemButton = (Button) findViewById(R.id.redeem_button);
+        final Button redeemButton = (Button) findViewById(R.id.redeem_button);
         redeemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (coupon.getCategory().equals("food")) {
-                    CouponsActivity.FoodCouponsFragment.removeCoupon(coupon);
-                } else if (coupon.getCategory().equals("entertainment")) {
-                    CouponsActivity.EntertainmentCouponsFragment.removeCoupon(coupon);
-                } else {
-                    CouponsActivity.OtherCouponsFragment.removeCoupon(coupon);
-                }
+                //Checks to see what the button is showing
+                if (redeemButton.getText().equals("REDEEM")) {
+                    if (coupon.getCategory().equals("food")) {
+                        CouponsActivity.FoodCouponsFragment.removeCoupon(coupon);
+                    } else if (coupon.getCategory().equals("entertainment")) {
+                        CouponsActivity.EntertainmentCouponsFragment.removeCoupon(coupon);
+                    } else {
+                        CouponsActivity.OtherCouponsFragment.removeCoupon(coupon);
+                    }
 
-                Intent intent = new Intent();
-                intent.putExtra("id", coupon.getId());
-                intent.setClass(IndividualCouponActivity.this, MyDealsActivity.class);
-                startActivity(intent);
+                    Intent intent = new Intent();
+                    intent.putExtra("id", coupon.getId());
+                    intent.setClass(IndividualCouponActivity.this, MyDealsActivity.class);
+                    startActivity(intent);
+                }
+                //done if button is showing use now
+                else {
+                    //start timer
+                }
 
             }
         });
