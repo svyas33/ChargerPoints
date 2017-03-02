@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import io.realm.RealmResults;
 
 /**
  * Created by 17svyas on 12/8/2016.
@@ -16,8 +16,11 @@ import java.util.ArrayList;
 
 public class  CouponAdapter extends ArrayAdapter<Coupon> {
 
-    public CouponAdapter(Activity context, ArrayList<Coupon> coupons){
+    String activity;
+
+    public CouponAdapter(Activity context, RealmResults<Coupon> coupons, String activity) {
         super(context, 0, coupons);
+        this.activity = activity;
 
     }
 
@@ -42,9 +45,14 @@ public class  CouponAdapter extends ArrayAdapter<Coupon> {
         TextView nameTextView = (TextView) listItemView.findViewById(R.id.name_text_view);
         nameTextView.setText(currentCoupon.getCouponValue());
 
-        //Display points of current coupon in TextView of list_item
-        TextView ptsTextView = (TextView) listItemView.findViewById(R.id.pts_text_view);
-        ptsTextView.setText(currentCoupon.getPts() + " points");
+        //Display points of current coupon in TextView of list_item only if displaying the list_item from CouponsActivity
+        if (activity.equals("coupons")) {
+            TextView ptsTextView = (TextView) listItemView.findViewById(R.id.pts_text_view);
+            ptsTextView.setText(currentCoupon.getPts() + " points");
+        } else {
+            TextView ptsTextView = (TextView) listItemView.findViewById(R.id.pts_text_view);
+            ptsTextView.setText(currentCoupon.getCompanyName());
+        }
 
         //After filling the list_item with information from current coupon,
         //pass it back to the ListView to be displayed

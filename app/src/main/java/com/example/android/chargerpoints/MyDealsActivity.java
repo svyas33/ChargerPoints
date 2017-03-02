@@ -7,9 +7,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import io.realm.RealmResults;
+
+import static com.example.android.chargerpoints.MyApplication.realm;
 
 public class MyDealsActivity extends AppCompatActivity {
+
+    private static RealmResults<Coupon> myDeals;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,33 +25,9 @@ public class MyDealsActivity extends AppCompatActivity {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        final ArrayList<Coupon> myDeals = new ArrayList<Coupon>();
+        myDeals = realm.where(Coupon.class).equalTo("category", "redeemed").findAll();
 
-        myDeals.add(new Coupon("$10 off $25!", "JCPenney's",
-                "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-        myDeals.add(new Coupon("$10 off $25!", "JCPenney's",
-                "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-        myDeals.add(new Coupon("$10 off $25!", "JCPenney's",
-                "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-        myDeals.add(new Coupon("$10 off $25!", "JCPenney's",
-                "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-        myDeals.add(new Coupon("$10 off $25!", "JCPenney's",
-                "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-        final Coupon coupon = (Coupon) getIntent().getSerializableExtra("coupon");
-
-        myDeals.add(coupon);
-
-        CouponAdapter adapter = new CouponAdapter(this, myDeals);
+        CouponAdapter adapter = new CouponAdapter(this, myDeals, "mydeals");
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
 
@@ -56,19 +37,23 @@ public class MyDealsActivity extends AppCompatActivity {
 
                 Coupon coupon = myDeals.get(position);
 
-                Intent myDealsIntent = new Intent(MyDealsActivity.this, IndividualCouponActivity.class);
-
                 Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("coupon", coupon); // or putSerializable()
-                intent.putExtras(bundle);
+                intent.putExtra("coupon_id", coupon.getId());
+                intent.putExtra("activity", "mydeals");
                 intent.setClass(MyDealsActivity.this, IndividualCouponActivity.class);
-                MyDealsActivity.this.startActivity(intent);
-
+                startActivity(intent);
             }
         });
 
     }
+
+    /*public static void addCoupon(Coupon coupon){
+        realm.beginTransaction();
+        coupon.setCategory("redeemed");
+        realm.copyToRealmOrUpdate(coupon);
+        realm.commitTransaction();
+    }*/
+
 
 
 }

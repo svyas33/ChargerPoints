@@ -15,13 +15,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
+import static com.example.android.chargerpoints.MainActivity.points;
+import static com.example.android.chargerpoints.MyApplication.realm;
 import static com.example.android.chargerpoints.R.layout.coupon_list;
 
 public class CouponsActivity extends AppCompatActivity {
 
-
+    static RealmResults<Coupon> foodCoupons;
+    static RealmResults<Coupon> entertainmentCoupons;
+    static RealmResults<Coupon> otherCoupons;
     SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
     ViewPager mViewPager;
 
@@ -44,45 +49,34 @@ public class CouponsActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
     }
 
-
-
-
     public static class FoodCouponsFragment extends Fragment {
-
-        final static ArrayList<Coupon> foodCoupons = new ArrayList<Coupon>();
-
-        static int pos = -1;
 
         public FoodCouponsFragment(){
         }
 
+        public static void removeCoupon(Coupon coupon) {
+
+            points = points - coupon.getPts();
+
+            realm.beginTransaction();
+            coupon.setCategory("redeemed");
+            realm.copyToRealmOrUpdate(coupon);
+            realm.commitTransaction();
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
+            Realm.init(getActivity());
+
             View rootView = inflater.inflate(coupon_list, container, false);
 
-            foodCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+            realm = Realm.getDefaultInstance();
 
-            foodCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+            foodCoupons = realm.where(Coupon.class).equalTo("category", "food").findAll();
 
-            foodCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-            foodCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-            foodCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-            CouponAdapter adapter = new CouponAdapter(getActivity(), foodCoupons);
+            CouponAdapter adapter = new CouponAdapter(getActivity(), foodCoupons, "coupons");
             ListView listView = (ListView) rootView.findViewById(R.id.list);
             listView.setAdapter(adapter);
 
@@ -90,14 +84,11 @@ public class CouponsActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                    Coupon newCoupon = foodCoupons.get(position);
-
-                    pos = position;
+                    Coupon coupon = foodCoupons.get(position);
 
                     Intent intent = new Intent();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("coupon", newCoupon); // or putSerializable()
-                    intent.putExtras(bundle);
+                    intent.putExtra("coupon_id", coupon.getId());
+                    intent.putExtra("activity", "coupons");
                     intent.setClass(getActivity(), IndividualCouponActivity.class);
                     getActivity().startActivity(intent);
 
@@ -107,47 +98,36 @@ public class CouponsActivity extends AppCompatActivity {
             return rootView;
         }
 
-        /*public static void removeCoupon(Coupon coupon){
-
-            foodCoupons.remove(pos);
-        }*/
-
     }
 
     public static class EntertainmentCouponsFragment extends Fragment {
 
+
+        static int pos = -1;
+
         public EntertainmentCouponsFragment(){
         }
 
+        public static void removeCoupon(Coupon coupon) {
+            realm.beginTransaction();
+            coupon.setCategory("redeemed");
+            realm.copyToRealmOrUpdate(coupon);
+            realm.commitTransaction();
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
+            Realm.init(getActivity());
+
             View rootView = inflater.inflate(coupon_list, container, false);
 
-            final ArrayList<Coupon> entertainmentCoupons = new ArrayList<Coupon>();
+            realm = Realm.getDefaultInstance();
 
-            entertainmentCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+            entertainmentCoupons = realm.where(Coupon.class).equalTo("category", "entertainment").findAll();
 
-            entertainmentCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-            entertainmentCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-            entertainmentCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-            entertainmentCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-            CouponAdapter adapter = new CouponAdapter(getActivity(), entertainmentCoupons);
+            CouponAdapter adapter = new CouponAdapter(getActivity(), entertainmentCoupons, "coupons");
             ListView listView = (ListView)rootView.findViewById(R.id.list);
             listView.setAdapter(adapter);
 
@@ -155,15 +135,15 @@ public class CouponsActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                    Coupon newCoupon = entertainmentCoupons.get(position);
+                    Coupon coupon = entertainmentCoupons.get(position);
+
+                    pos = position;
 
                     Intent intent = new Intent();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("coupon", newCoupon);
-                    intent.putExtras(bundle);
+                    intent.putExtra("coupon_id", coupon.getId());
+                    intent.putExtra("activity", "coupons");
                     intent.setClass(getActivity(), IndividualCouponActivity.class);
                     getActivity().startActivity(intent);
-
                 }
             });
 
@@ -173,39 +153,31 @@ public class CouponsActivity extends AppCompatActivity {
 
     public static class OtherCouponsFragment extends Fragment {
 
-        public OtherCouponsFragment(){
+        static int pos = -1;
 
+        public OtherCouponsFragment(){
         }
 
+        public static void removeCoupon(Coupon coupon) {
+            realm.beginTransaction();
+            coupon.setCategory("redeemed");
+            realm.copyToRealmOrUpdate(coupon);
+            realm.commitTransaction();
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
+            Realm.init(getActivity());
+
             View rootView = inflater.inflate(coupon_list, container, false);
 
-            final ArrayList<Coupon> otherCoupons = new ArrayList<Coupon>();
+            realm = Realm.getDefaultInstance();
 
-            otherCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
+            otherCoupons = realm.where(Coupon.class).equalTo("category", "other").findAll();
 
-            otherCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-            otherCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-            otherCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-            otherCoupons.add(new Coupon("$10 off $25!", "JCPenney's",
-                    "In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016",
-                    15, R.drawable.jcplogo, R.drawable.jcpqr));
-
-            CouponAdapter adapter = new CouponAdapter(getActivity(), otherCoupons);
+            CouponAdapter adapter = new CouponAdapter(getActivity(), otherCoupons, "coupons");
             ListView listView = (ListView) rootView.findViewById(R.id.list);
             listView.setAdapter(adapter);
 
@@ -213,12 +185,13 @@ public class CouponsActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                    Coupon newCoupon = otherCoupons.get(position);
+                    Coupon coupon = otherCoupons.get(position);
+
+                    pos = position;
 
                     Intent intent = new Intent();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("coupon", newCoupon); // or putSerializable()
-                    intent.putExtras(bundle);
+                    intent.putExtra("coupon_id", coupon.getId());
+                    intent.putExtra("activity", "coupons");
                     intent.setClass(getActivity(), IndividualCouponActivity.class);
                     getActivity().startActivity(intent);
 

@@ -6,13 +6,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    public static int points;
+    private Timer timer;
+    private TimerTask timerTask = new TimerTask() {
+
+        @Override
+        public void run() {
+            points++;
+            displayPoints();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         setContentView(R.layout.activity_main);
 
@@ -43,6 +56,42 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent myDealsIntent = new Intent(MainActivity.this, MyDealsActivity.class);
                 startActivity(myDealsIntent);
+            }
+        });
+
+        TextView shareTextView = (TextView) findViewById(R.id.share);
+        shareTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //implement share stuff https://www.youtube.com/watch?v=V9laA2sHetA
+            }
+        });
+
+        start();
+
+    }
+
+    public void start() {
+        if (timer != null) {
+            return;
+        }
+        timer = new Timer();
+        timer.scheduleAtFixedRate(timerTask, 0, 2000);
+    }
+
+    public void stop() {
+        timer.cancel();
+        timer = null;
+    }
+
+    public void displayPoints() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                TextView ptsTextView = (TextView) findViewById(R.id.pts);
+                ptsTextView.setText(points + " points");
+
             }
         });
 
