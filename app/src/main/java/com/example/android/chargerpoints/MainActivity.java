@@ -1,5 +1,7 @@
 package com.example.android.chargerpoints;
 
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,13 +15,17 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     public static int points;
+    Context context = this;
     private Timer timer;
     private TimerTask timerTask = new TimerTask() {
-
         @Override
         public void run() {
-            points++;
+            KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+            if (myKM.inKeyguardRestrictedInputMode()) {
+                points++;
+            }
             displayPoints();
+
         }
     };
 
@@ -68,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         start();
-
     }
 
     public void start() {
@@ -76,25 +81,22 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask, 0, 2000);
-    }
-
-    public void stop() {
-        timer.cancel();
-        timer = null;
+        timer.scheduleAtFixedRate(timerTask, 0, 60000);
     }
 
     public void displayPoints() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                TextView ptsTextView = (TextView) findViewById(R.id.pts);
-                ptsTextView.setText(points + " points");
-
+                if (points == 1) {
+                    TextView ptsTextView = (TextView) findViewById(R.id.pts);
+                    ptsTextView.setText(points + " point");
+                } else {
+                    TextView ptsTextView = (TextView) findViewById(R.id.pts);
+                    ptsTextView.setText(points + " points");
+                }
             }
         });
 
     }
-
 }

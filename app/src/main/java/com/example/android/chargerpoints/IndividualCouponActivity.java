@@ -3,30 +3,39 @@ package com.example.android.chargerpoints;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 
+import static com.example.android.chargerpoints.MainActivity.points;
 import static com.example.android.chargerpoints.MyApplication.realm;
 
 public class IndividualCouponActivity extends AppCompatActivity {
 
+    private static final String FORMAT = "%02d:%02d";
     Coupon coupon;
     int couponId;
     //Timer stuff
     TextView timerText;
-    private static final String FORMAT = "%02d:%02d";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_coupon);
+
+        if (getSupportActionBar() != null) {
+            ActionBar ab = getSupportActionBar();
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
+
 
         couponId = getIntent().getIntExtra("coupon_id", 0);
         String activity = getIntent().getStringExtra("activity");
@@ -68,22 +77,33 @@ public class IndividualCouponActivity extends AppCompatActivity {
 
                 //Checks to see what the button is showing
                 if (redeemButton.getText().equals("REDEEM")) {
-                    if (coupon.getCategory().equals("food")) {
-                        CouponsActivity.FoodCouponsFragment.removeCoupon(coupon);
-                    } else if (coupon.getCategory().equals("entertainment")) {
-                        CouponsActivity.EntertainmentCouponsFragment.removeCoupon(coupon);
-                    } else {
-                        CouponsActivity.OtherCouponsFragment.removeCoupon(coupon);
-                    }
+                    if (coupon.getPts() <= points) {
+                        if (coupon.getCategory().equals("food")) {
+                            CouponsActivity.FoodCouponsFragment.removeCoupon(coupon);
+                        } else if (coupon.getCategory().equals("entertainment")) {
+                            CouponsActivity.EntertainmentCouponsFragment.removeCoupon(coupon);
+                        } else {
+                            CouponsActivity.OtherCouponsFragment.removeCoupon(coupon);
+                        }
 
-                    Intent intent = new Intent();
-                    intent.putExtra("id", coupon.getId());
-                    intent.setClass(IndividualCouponActivity.this, MyDealsActivity.class);
-                    startActivity(intent);
+                        Intent intent = new Intent();
+                        intent.putExtra("id", coupon.getId());
+                        intent.setClass(IndividualCouponActivity.this, MyDealsActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(IndividualCouponActivity.this, "You don't have enough points to redeem this coupon!",
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
                 //done if button is showing use now
                 else {
-                    onBackPressed();
+
+                    if (getSupportActionBar() != null) {
+                        ActionBar ab = getSupportActionBar();
+                        ab.setDisplayHomeAsUpEnabled(false);
+                    }
+
+                    //onBackPressed();
                     // Hide Use Now Button
                     Button useNowBtn = (Button) findViewById(R.id.redeem_button);
                     useNowBtn.setVisibility(useNowBtn.INVISIBLE);
@@ -112,6 +132,10 @@ public class IndividualCouponActivity extends AppCompatActivity {
                             }
 
                             public void onFinish() {
+                                if (getSupportActionBar() != null) {
+                                    ActionBar ab = getSupportActionBar();
+                                    ab.setDisplayHomeAsUpEnabled(true);
+                                }
                                 Intent intent = new Intent();
                                 intent.setClass(IndividualCouponActivity.this, MyDealsActivity.class);
                                 startActivity(intent);
@@ -122,4 +146,5 @@ public class IndividualCouponActivity extends AppCompatActivity {
         });
 
     }
+
 }

@@ -1,5 +1,6 @@
 package com.example.android.chargerpoints;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -38,6 +39,8 @@ public class CouponsActivity extends AppCompatActivity {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        ActionBar bar = getActionBar();
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -53,12 +56,13 @@ public class CouponsActivity extends AppCompatActivity {
 
         public static void removeCoupon(Coupon coupon) {
 
-            points = points - coupon.getPts();
-
-            realm.beginTransaction();
-            coupon.setCategory("redeemed");
-            realm.copyToRealmOrUpdate(coupon);
-            realm.commitTransaction();
+            if (coupon.getPts() <= points) {
+                points = points - coupon.getPts();
+                realm.beginTransaction();
+                coupon.setCategory("redeemed");
+                realm.copyToRealmOrUpdate(coupon);
+                realm.commitTransaction();
+            }
         }
 
         @Override
@@ -107,12 +111,14 @@ public class CouponsActivity extends AppCompatActivity {
 
         public static void removeCoupon(Coupon coupon) {
 
-            points = points - coupon.getPts();
+            if (coupon.getPts() <= points) {
+                points = points - coupon.getPts();
+                realm.beginTransaction();
+                coupon.setCategory("redeemed");
+                realm.copyToRealmOrUpdate(coupon);
+                realm.commitTransaction();
+            }
 
-            realm.beginTransaction();
-            coupon.setCategory("redeemed");
-            realm.copyToRealmOrUpdate(coupon);
-            realm.commitTransaction();
         }
 
         @Override
@@ -160,12 +166,14 @@ public class CouponsActivity extends AppCompatActivity {
 
         public static void removeCoupon(Coupon coupon) {
 
-            points = points - coupon.getPts();
+            if (coupon.getPts() <= points) {
+                points = points - coupon.getPts();
+                realm.beginTransaction();
+                coupon.setCategory("redeemed");
+                realm.copyToRealmOrUpdate(coupon);
+                realm.commitTransaction();
+            }
 
-            realm.beginTransaction();
-            coupon.setCategory("redeemed");
-            realm.copyToRealmOrUpdate(coupon);
-            realm.commitTransaction();
         }
 
         @Override

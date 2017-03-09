@@ -16,6 +16,7 @@ public class MyDealsActivity extends AppCompatActivity {
 
     private static RealmResults<Coupon> myDeals;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,7 @@ public class MyDealsActivity extends AppCompatActivity {
         }
 
         realm = Realm.getDefaultInstance();
+
         myDeals = realm.where(Coupon.class).equalTo("category", "redeemed").findAll();
 
         CouponAdapter adapter = new CouponAdapter(this, myDeals, "mydeals");
@@ -47,4 +49,5 @@ public class MyDealsActivity extends AppCompatActivity {
         });
 
     }
+
 }
