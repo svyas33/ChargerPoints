@@ -66,6 +66,30 @@
             android:textColor="#0868BE"
             android:textSize="20sp" />
 
+        <Button
+            android:id="@+id/redeem_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:background="#42A1F5"
+            android:text="REDEEM"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/countdown"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:textColor="#0868BE"
+            android:textStyle="normal|bold"
+            android:text=""
+            android:layout_alignBottom="@+id/redeem_button"
+            android:layout_centerHorizontal="true" />
+
         <TextView
             android:id="@+id/info_textview"
             android:layout_width="wrap_content"
@@ -81,18 +105,6 @@
             android:textAlignment="center"
             android:textColor="#42A1F5"
             android:textSize="15sp" />
-
-        <Button
-            android:id="@+id/redeem_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:background="#42A1F5"
-            android:text="REDEEM"
-            android:textColor="#ffffff"
-            android:textStyle="bold" />
 
     </RelativeLayout>
 

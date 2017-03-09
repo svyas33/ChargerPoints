@@ -2,31 +2,35 @@ package com.example.android.chargerpoints;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.concurrent.TimeUnit;
+
 import io.realm.Realm;
+
+import static com.example.android.chargerpoints.MyApplication.realm;
 
 public class IndividualCouponActivity extends AppCompatActivity {
 
     Coupon coupon;
     int couponId;
+    //Timer stuff
+    TextView timerText;
+    private static final String FORMAT = "%02d:%02d";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_coupon);
 
-        if(getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         couponId = getIntent().getIntExtra("coupon_id", 0);
         String activity = getIntent().getStringExtra("activity");
-        Realm realm = Realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
         try {
             coupon = realm.where(Coupon.class).equalTo("id", couponId).findFirst();
 
@@ -48,9 +52,6 @@ public class IndividualCouponActivity extends AppCompatActivity {
             } else {
                 TextView ptsTxt = (TextView) findViewById(R.id.point_textview);
                 ptsTxt.setText("");
-
-                ImageView qrImg = (ImageView) findViewById(R.id.qr_imageview);
-                qrImg.setImageResource(coupon.getQrImageResourceId());
 
                 //sets text to use now when the activity is mydeals
                 Button redeemBtn = (Button) findViewById(R.id.redeem_button);
@@ -82,12 +83,43 @@ public class IndividualCouponActivity extends AppCompatActivity {
                 }
                 //done if button is showing use now
                 else {
-                    //start timer
-                }
+                    onBackPressed();
+                    // Hide Use Now Button
+                    Button useNowBtn = (Button) findViewById(R.id.redeem_button);
+                    useNowBtn.setVisibility(useNowBtn.INVISIBLE);
 
+                    //Display QR Code
+                    ImageView qrImg = (ImageView) findViewById(R.id.qr_imageview);
+                    qrImg.setImageResource(coupon.getQrImageResourceId());
+
+                    realm.beginTransaction();
+                    coupon.setCategory("used");
+                    realm.copyToRealmOrUpdate(coupon);
+                    realm.commitTransaction();
+                    // Start timer
+                    timerText=(TextView)findViewById(R.id.countdown);
+                        //300000
+                        new CountDownTimer(5000, 1000) { // adjust the milli seconds here
+
+                            public void onTick(long millisUntilFinished) {
+
+                                timerText.setText(""+String.format(FORMAT,
+                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)),
+                                        TimeUnit.MILLISECONDS.toMillis(millisUntilFinished) - TimeUnit.SECONDS.toMillis(
+                                                TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))));
+                            }
+
+                            public void onFinish() {
+                                Intent intent = new Intent();
+                                intent.setClass(IndividualCouponActivity.this, MyDealsActivity.class);
+                                startActivity(intent);
+                            }
+                        }.start();
+                    }
             }
         });
 
     }
-
 }

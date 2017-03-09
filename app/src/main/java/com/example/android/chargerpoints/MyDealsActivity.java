@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import io.realm.Realm;
 import io.realm.RealmResults;
 
 import static com.example.android.chargerpoints.MyApplication.realm;
@@ -14,7 +15,6 @@ import static com.example.android.chargerpoints.MyApplication.realm;
 public class MyDealsActivity extends AppCompatActivity {
 
     private static RealmResults<Coupon> myDeals;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class MyDealsActivity extends AppCompatActivity {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        realm = Realm.getDefaultInstance();
         myDeals = realm.where(Coupon.class).equalTo("category", "redeemed").findAll();
 
         CouponAdapter adapter = new CouponAdapter(this, myDeals, "mydeals");
@@ -46,14 +47,4 @@ public class MyDealsActivity extends AppCompatActivity {
         });
 
     }
-
-    /*public static void addCoupon(Coupon coupon){
-        realm.beginTransaction();
-        coupon.setCategory("redeemed");
-        realm.copyToRealmOrUpdate(coupon);
-        realm.commitTransaction();
-    }*/
-
-
-
 }
