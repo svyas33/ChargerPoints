@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask, 0, 60000);
+        timer.scheduleAtFixedRate(timerTask, 0, 2000);
     }
 
     public void displayPoints() {
