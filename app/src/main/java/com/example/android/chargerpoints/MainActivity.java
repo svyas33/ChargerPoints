@@ -69,7 +69,13 @@ public class MainActivity extends AppCompatActivity {
         shareTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //implement share stuff https://www.youtube.com/watch?v=V9laA2sHetA
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                String shareBody = "I have " + points + " points in ChargerPoints! Start getting coupons today!";
+                String shareSub = "ChargerPoints is Awesome!";
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(shareIntent, "Share using"));
             }
         });
 

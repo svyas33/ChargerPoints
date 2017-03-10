@@ -165,10 +165,6 @@ public class MyApplication extends Application {
 
 
             } finally {
-
-                // This needs to change or something else needs to change because you cannot open my deals right away
-                // Error: java.lang.RuntimeException: Unable to start activity ComponentInfo{com.example.android.chargerpoints/com.example.android.chargerpoints.MyDealsActivity}:
-                // java.lang.IllegalStateException: This Realm instance has already been closed, making it unusable.
                 realm.close();
             }
         }
