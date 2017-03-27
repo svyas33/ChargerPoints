@@ -8,24 +8,47 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static int points;
+    static int points;
+
+    Points myPoints;
+
+    Realm realm;
+
     Context context = this;
+
+    Calendar c = Calendar.getInstance();
+    int hours = c.get(Calendar.HOUR_OF_DAY);
+
     private Timer timer;
     private TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-            if (myKM.inKeyguardRestrictedInputMode()) {
-                points++;
+            if (hours > 7 || hours < 15) {
+                KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+                if (myKM.inKeyguardRestrictedInputMode()) {
+                    points++;
+                } else {
+                    try {
+                        realm = Realm.getDefaultInstance();
+                        myPoints = realm.where(Points.class).equalTo("id", 1).findFirst();
+                        realm.beginTransaction();
+                        myPoints.setPts(points);
+                        realm.copyToRealmOrUpdate(myPoints);
+                        realm.commitTransaction();
+                    } finally {
+                        realm.close();
+                    }
+                }
+                displayPoints(points);
             }
-            displayPoints();
-
         }
     };
 
@@ -34,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        Realm.init(this);
 
         TextView couponsTextView = (TextView) findViewById(R.id.coupons);
         couponsTextView.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        TextView ptsTextView = (TextView) findViewById(R.id.pts);
+        ptsTextView.setText(points + "points");
+
         start();
     }
 
@@ -90,16 +118,16 @@ public class MainActivity extends AppCompatActivity {
         timer.scheduleAtFixedRate(timerTask, 0, 2000);
     }
 
-    public void displayPoints() {
+    public void displayPoints(final int pts) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (points == 1) {
+                if (pts == 1) {
                     TextView ptsTextView = (TextView) findViewById(R.id.pts);
-                    ptsTextView.setText(points + " point");
+                    ptsTextView.setText(pts + " point");
                 } else {
                     TextView ptsTextView = (TextView) findViewById(R.id.pts);
-                    ptsTextView.setText(points + " points");
+                    ptsTextView.setText(pts + " points");
                 }
             }
         });

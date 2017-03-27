@@ -1,6 +1,5 @@
 package com.example.android.chargerpoints;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -19,7 +18,6 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 import static com.example.android.chargerpoints.MainActivity.points;
-import static com.example.android.chargerpoints.MyApplication.realm;
 import static com.example.android.chargerpoints.R.layout.coupon_list;
 
 public class CouponsActivity extends AppCompatActivity {
@@ -27,19 +25,23 @@ public class CouponsActivity extends AppCompatActivity {
     static RealmResults<Coupon> foodCoupons;
     static RealmResults<Coupon> entertainmentCoupons;
     static RealmResults<Coupon> otherCoupons;
+    static Points myPoints;
     SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
     ViewPager mViewPager;
+    Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupons);
 
+        realm = Realm.getDefaultInstance();
+        Realm.init(this);
+        myPoints = realm.where(Points.class).equalTo("id", 1).findFirst();
+
         if(getActionBar() != null) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-        ActionBar bar = getActionBar();
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
@@ -51,15 +53,20 @@ public class CouponsActivity extends AppCompatActivity {
 
     public static class FoodCouponsFragment extends Fragment {
 
+        static Realm realm;
+
         public FoodCouponsFragment(){
         }
 
         public static void removeCoupon(Coupon coupon) {
 
             if (coupon.getPts() <= points) {
-                points = points - coupon.getPts();
+                realm = Realm.getDefaultInstance();
                 realm.beginTransaction();
+                points = points - coupon.getPts();
                 coupon.setCategory("redeemed");
+                myPoints.setPts(points);
+                realm.copyToRealmOrUpdate(myPoints);
                 realm.copyToRealmOrUpdate(coupon);
                 realm.commitTransaction();
             }
@@ -106,15 +113,20 @@ public class CouponsActivity extends AppCompatActivity {
 
         static int pos = -1;
 
+        static Realm realm;
+
         public EntertainmentCouponsFragment(){
         }
 
         public static void removeCoupon(Coupon coupon) {
 
             if (coupon.getPts() <= points) {
-                points = points - coupon.getPts();
+                realm = Realm.getDefaultInstance();
                 realm.beginTransaction();
+                points = points - coupon.getPts();
                 coupon.setCategory("redeemed");
+                myPoints.setPts(points);
+                realm.copyToRealmOrUpdate(myPoints);
                 realm.copyToRealmOrUpdate(coupon);
                 realm.commitTransaction();
             }
@@ -161,15 +173,20 @@ public class CouponsActivity extends AppCompatActivity {
 
         static int pos = -1;
 
+        static Realm realm;
+
         public OtherCouponsFragment(){
         }
 
         public static void removeCoupon(Coupon coupon) {
 
             if (coupon.getPts() <= points) {
-                points = points - coupon.getPts();
+                realm = Realm.getDefaultInstance();
                 realm.beginTransaction();
+                points = points - coupon.getPts();
                 coupon.setCategory("redeemed");
+                myPoints.setPts(points);
+                realm.copyToRealmOrUpdate(myPoints);
                 realm.copyToRealmOrUpdate(coupon);
                 realm.commitTransaction();
             }
@@ -245,7 +262,7 @@ public class CouponsActivity extends AppCompatActivity {
                 case 0:
                     return "Food";
                 case 1:
-                    return "Entertainment";
+                    return "Fun";
                 case 2:
                     return "Other";
                 default:

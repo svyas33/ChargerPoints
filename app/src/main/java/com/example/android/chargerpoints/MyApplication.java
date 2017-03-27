@@ -9,13 +9,15 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
+import static com.example.android.chargerpoints.MainActivity.points;
+
 /**
  * Created by ShivaniVyas on 2/2/17.
  */
 
 public class MyApplication extends Application {
 
-    static Realm realm;
+    Realm realm;
 
     @Override
     public void onCreate() {
@@ -40,6 +42,19 @@ public class MyApplication extends Application {
 
 
         RealmResults<Coupon> allCoupons = realm.where(Coupon.class).findAll();
+        Points myPoints = realm.where(Points.class).equalTo("id", 1).findFirst();
+
+        if (myPoints == null) {
+            final Points newPts = new Points();
+            newPts.setId(1);
+            newPts.setPts(0);
+            realm.beginTransaction();
+            realm.copyToRealmOrUpdate(newPts);
+            realm.commitTransaction();
+        } else {
+            points = myPoints.getPts();
+        }
+
 
         if (allCoupons.size() == 0) {
             try {
@@ -163,10 +178,20 @@ public class MyApplication extends Application {
                 realm.copyToRealmOrUpdate(otherCoupon3);
                 realm.commitTransaction();
 
-
             } finally {
                 realm.close();
             }
         }
+
+    }
+
+    public void onTerminate() {
+        realm.beginTransaction();
+        Points myPoints = realm.where(Points.class).equalTo("id", 1).findFirst();
+        myPoints.setPts(points);
+        realm.copyToRealmOrUpdate(myPoints);
+        realm.commitTransaction();
+
+        super.onTerminate();
     }
 }

@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 import io.realm.Realm;
 
 import static com.example.android.chargerpoints.MainActivity.points;
-import static com.example.android.chargerpoints.MyApplication.realm;
 
 public class IndividualCouponActivity extends AppCompatActivity {
 
@@ -25,6 +24,8 @@ public class IndividualCouponActivity extends AppCompatActivity {
     int couponId;
     //Timer stuff
     TextView timerText;
+
+    Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class IndividualCouponActivity extends AppCompatActivity {
         couponId = getIntent().getIntExtra("coupon_id", 0);
         String activity = getIntent().getStringExtra("activity");
         realm = Realm.getDefaultInstance();
+        Realm.init(this);
         try {
             coupon = realm.where(Coupon.class).equalTo("id", couponId).findFirst();
 
@@ -82,8 +84,6 @@ public class IndividualCouponActivity extends AppCompatActivity {
                         } else if (coupon.getCategory().equals("entertainment")) {
                             CouponsActivity.EntertainmentCouponsFragment.removeCoupon(coupon);
                         } else {
-                            Toast.makeText(IndividualCouponActivity.this, "You don't have enough points to redeem this coupon!",
-                                    Toast.LENGTH_LONG).show();
                             CouponsActivity.OtherCouponsFragment.removeCoupon(coupon);
                         }
 
@@ -91,7 +91,12 @@ public class IndividualCouponActivity extends AppCompatActivity {
                         intent.putExtra("id", coupon.getId());
                         intent.setClass(IndividualCouponActivity.this, MyDealsActivity.class);
                         startActivity(intent);
+                    } else {
+                        Toast.makeText(IndividualCouponActivity.this, "You don't have enough points to redeem this coupon!",
+                                Toast.LENGTH_LONG).show();
                     }
+
+
                 }
                 //done if button is showing use now
                 else {
