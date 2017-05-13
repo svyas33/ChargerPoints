@@ -8,4 +8,10 @@
         <item name="colorAccent">#ffffff</item>
     </style>
 
+    <style name="Theme.App.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorPrimaryDark</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlHighlight">#9FA8DA</item>
+    </style>
+
 </resources>

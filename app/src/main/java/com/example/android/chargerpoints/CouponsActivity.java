@@ -15,20 +15,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
+import io.realm.RealmList;
 
 import static com.example.android.chargerpoints.MainActivity.points;
 import static com.example.android.chargerpoints.R.layout.coupon_list;
 
 public class CouponsActivity extends AppCompatActivity {
 
-    static RealmResults<Coupon> foodCoupons;
-    static RealmResults<Coupon> entertainmentCoupons;
-    static RealmResults<Coupon> otherCoupons;
-    static Points myPoints;
+    static Realm realm;
+    static RealmList<Coupon> foodCoupons;
+    static RealmList<Coupon> entertainmentCoupons;
+    static RealmList<Coupon> otherCoupons;
+    static User user;
     SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
     ViewPager mViewPager;
-    Realm realm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,10 @@ public class CouponsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_coupons);
 
         realm = Realm.getDefaultInstance();
-        Realm.init(this);
-        myPoints = realm.where(Points.class).equalTo("id", 1).findFirst();
+
+        user = realm.where(User.class).equalTo("isLoggedIn", true).findFirst();
+        points = user.getPoints();
+
 
         if(getActionBar() != null) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -53,23 +56,30 @@ public class CouponsActivity extends AppCompatActivity {
 
     public static class FoodCouponsFragment extends Fragment {
 
-        static Realm realm;
+        static Realm realm2;
 
         public FoodCouponsFragment(){
         }
 
         public static void removeCoupon(Coupon coupon) {
 
+            realm2 = Realm.getDefaultInstance();
+
+            user = realm2.where(User.class).equalTo("isLoggedIn", true).findFirst();
+            points = user.getPoints();
+
             if (coupon.getPts() <= points) {
-                realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
+                realm2 = Realm.getDefaultInstance();
+                realm2.beginTransaction();
                 points = points - coupon.getPts();
-                coupon.setCategory("redeemed");
-                myPoints.setPts(points);
-                realm.copyToRealmOrUpdate(myPoints);
-                realm.copyToRealmOrUpdate(coupon);
-                realm.commitTransaction();
+                user.removeFromFoodCoupons(coupon);
+                user.addToRedeemedCoupons(coupon);
+                user.setPoints(points);
+                realm2.copyToRealmOrUpdate(user);
+                realm2.commitTransaction();
             }
+
+            points = user.getPoints();
         }
 
         @Override
@@ -82,7 +92,7 @@ public class CouponsActivity extends AppCompatActivity {
 
             realm = Realm.getDefaultInstance();
 
-            foodCoupons = realm.where(Coupon.class).equalTo("category", "food").findAll();
+            foodCoupons = user.getFoodCoupons();
 
             CouponAdapter adapter = new CouponAdapter(getActivity(), foodCoupons, "coupons");
             ListView listView = (ListView) rootView.findViewById(R.id.list);
@@ -120,14 +130,17 @@ public class CouponsActivity extends AppCompatActivity {
 
         public static void removeCoupon(Coupon coupon) {
 
+            user = realm.where(User.class).equalTo("isLoggedIn", true).findFirst();
+            points = user.getPoints();
+
             if (coupon.getPts() <= points) {
                 realm = Realm.getDefaultInstance();
                 realm.beginTransaction();
                 points = points - coupon.getPts();
-                coupon.setCategory("redeemed");
-                myPoints.setPts(points);
-                realm.copyToRealmOrUpdate(myPoints);
-                realm.copyToRealmOrUpdate(coupon);
+                user.setPoints(points);
+                user.removeFromEntertainmentCoupons(coupon);
+                user.addToRedeemedCoupons(coupon);
+                realm.copyToRealmOrUpdate(user);
                 realm.commitTransaction();
             }
 
@@ -143,7 +156,7 @@ public class CouponsActivity extends AppCompatActivity {
 
             realm = Realm.getDefaultInstance();
 
-            entertainmentCoupons = realm.where(Coupon.class).equalTo("category", "entertainment").findAll();
+            entertainmentCoupons = user.getEntertainmentCoupons();
 
             CouponAdapter adapter = new CouponAdapter(getActivity(), entertainmentCoupons, "coupons");
             ListView listView = (ListView)rootView.findViewById(R.id.list);
@@ -165,6 +178,7 @@ public class CouponsActivity extends AppCompatActivity {
                 }
             });
 
+
             return rootView;
         }
     }
@@ -180,14 +194,17 @@ public class CouponsActivity extends AppCompatActivity {
 
         public static void removeCoupon(Coupon coupon) {
 
+            user = realm.where(User.class).equalTo("isLoggedIn", true).findFirst();
+            points = user.getPoints();
+
             if (coupon.getPts() <= points) {
                 realm = Realm.getDefaultInstance();
                 realm.beginTransaction();
                 points = points - coupon.getPts();
-                coupon.setCategory("redeemed");
-                myPoints.setPts(points);
-                realm.copyToRealmOrUpdate(myPoints);
-                realm.copyToRealmOrUpdate(coupon);
+                user.setPoints(points);
+                user.removeFromOtherCoupons(coupon);
+                user.addToRedeemedCoupons(coupon);
+                realm.copyToRealmOrUpdate(user);
                 realm.commitTransaction();
             }
 
@@ -203,7 +220,7 @@ public class CouponsActivity extends AppCompatActivity {
 
             realm = Realm.getDefaultInstance();
 
-            otherCoupons = realm.where(Coupon.class).equalTo("category", "other").findAll();
+            otherCoupons = user.getOtherCoupons();
 
             CouponAdapter adapter = new CouponAdapter(getActivity(), otherCoupons, "coupons");
             ListView listView = (ListView) rootView.findViewById(R.id.list);

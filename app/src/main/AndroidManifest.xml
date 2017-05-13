@@ -9,44 +9,50 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:label="ChargerPoints" />
+        <activity
+            android:name=".CouponsActivity"
+            android:label="@string/title_coupons"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".MyDealsActivity"
+            android:label="@string/title_my_deals"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".IndividualCouponActivity"
+            android:label="@string/title_individual_coupon"
+            android:parentActivityName=".MyDealsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".HelpActivity"
+            android:label="@string/title_help"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".LogonActivity"
+            android:label="Log In"></activity>
+        <activity android:name=".StartupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity android:name=".CouponsActivity"
-            android:label="@string/title_coupons"
-            android:parentActivityName = ".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
-        </activity>
-
-        <activity android:name=".MyDealsActivity"
-            android:label="@string/title_my_deals"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
-        </activity>
-
-        <activity android:name=".IndividualCouponActivity"
-            android:label="@string/title_individual_coupon"
-            android:parentActivityName=".MyDealsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
-        </activity>
-
-        <activity android:name=".HelpActivity"
-            android:label="@string/title_help"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
         </activity>
 
     </application>

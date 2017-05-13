@@ -8,14 +8,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
+import io.realm.RealmList;
 
 public class MyDealsActivity extends AppCompatActivity {
 
-    private static RealmResults<Coupon> myDeals;
-
     Realm realm;
-
+    private RealmList<Coupon> myDeals;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +28,9 @@ public class MyDealsActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
         Realm.init(this);
 
-        myDeals = realm.where(Coupon.class).equalTo("category", "redeemed").findAll();
+        user = realm.where(User.class).equalTo("isLoggedIn", true).findFirst();
+
+        myDeals = user.getRedeemedCoupons();
 
         CouponAdapter adapter = new CouponAdapter(this, myDeals, "mydeals");
         ListView listView = (ListView) findViewById(R.id.list);

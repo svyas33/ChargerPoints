@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import io.realm.RealmResults;
+import io.realm.RealmList;
 
 /**
  * Created by 17svyas on 12/8/2016.
@@ -18,7 +18,7 @@ public class  CouponAdapter extends ArrayAdapter<Coupon> {
 
     String activity;
 
-    public CouponAdapter(Activity context, RealmResults<Coupon> coupons, String activity) {
+    public CouponAdapter(Activity context, RealmList<Coupon> coupons, String activity) {
         super(context, 0, coupons);
         this.activity = activity;
 

@@ -1,106 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:background="#42A1F5"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#42A1F5"
-    android:layout_centerHorizontal="true"
-    android:id="@+id/relative_layout"
     tools:context="com.example.android.chargerpoints.MainActivity">
 
     <ImageView
+        android:id="@+id/pig"
         android:layout_width="197dp"
         android:layout_height="155dp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/bluepig"
-        android:id="@+id/pig" />
+        android:background="@drawable/bluepig" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="POINTS: #"
-        android:layout_below="@id/pig"
-        android:textSize="40sp"
-        android:fontFamily="sans-serif"
-        android:textColor="@android:color/white"
         android:id="@+id/pts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pig"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="sans-serif"
         android:padding="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:text="POINTS: #"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="40sp" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/pts"
         android:id="@+id/linear_layout"
-        android:layout_marginBottom="8dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pts"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#86c3f9"
-            android:text="COUPONS"
-            android:layout_below="@id/pts"
-            android:textSize="25sp"
-            android:padding="12dp"
-            android:textColor="@android:color/white"
-            android:layout_weight="1"
-            android:layout_marginRight="8dp"
             android:id="@+id/coupons"
-            android:textAlignment="center"/>
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#86c3f9"
-            android:text="MY DEALS"
             android:layout_below="@id/pts"
-            android:textSize="25sp"
-            android:padding="12dp"
-            android:textColor="@android:color/white"
+            android:layout_marginRight="8dp"
             android:layout_weight="1"
+            android:background="#86c3f9"
+            android:padding="12dp"
+            android:text="COUPONS"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
+
+        <TextView
             android:id="@+id/myDeals"
-            android:textAlignment="center"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pts"
+            android:layout_weight="1"
+            android:background="#86c3f9"
+            android:padding="12dp"
+            android:text="MY DEALS"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/linear_layout">
+        android:layout_below="@id/linear_layout"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#86c3f9"
-            android:text="SHARE"
-            android:layout_below="@id/pts"
-            android:textSize="25sp"
-            android:padding="12dp"
-            android:textColor="@android:color/white"
-            android:layout_weight="1"
-            android:layout_marginRight="8dp"
             android:id="@+id/share"
-            android:textAlignment="center"/>
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#86c3f9"
-            android:text="HELP"
             android:layout_below="@id/pts"
-            android:textSize="25sp"
-            android:padding="12dp"
-            android:textColor="@android:color/white"
+            android:layout_marginRight="8dp"
             android:layout_weight="1"
+            android:background="#86c3f9"
+            android:padding="12dp"
+            android:text="SHARE"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
+
+        <TextView
             android:id="@+id/help"
-            android:textAlignment="center"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pts"
+            android:layout_weight="1"
+            android:background="#86c3f9"
+            android:padding="12dp"
+            android:text="HELP"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/logOff"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:background="#86c3f9"
+        android:padding="12dp"
+        android:text="LOG OFF"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
 
 
 </RelativeLayout>

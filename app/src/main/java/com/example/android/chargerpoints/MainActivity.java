@@ -16,9 +16,10 @@ import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
 
-    static int points;
+    public static int points;
 
-    Points myPoints;
+    User user;
+    String userEmail;
 
     Realm realm;
 
@@ -28,44 +29,47 @@ public class MainActivity extends AppCompatActivity {
     int hours = c.get(Calendar.HOUR_OF_DAY);
 
     private Timer timer;
-    private TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-            if (hours > 7 || hours < 15) {
-                KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-                if (myKM.inKeyguardRestrictedInputMode()) {
-                    points++;
-                } else {
-                    try {
-                        realm = Realm.getDefaultInstance();
-                        myPoints = realm.where(Points.class).equalTo("id", 1).findFirst();
-                        realm.beginTransaction();
-                        myPoints.setPts(points);
-                        realm.copyToRealmOrUpdate(myPoints);
-                        realm.commitTransaction();
-                    } finally {
-                        realm.close();
-                    }
-                }
-                displayPoints(points);
-            }
-        }
-    };
+    private TimerTask timerTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
+        realm = Realm.getDefaultInstance();
+
         Realm.init(this);
+
+        user = realm.where(User.class).equalTo("isLoggedIn", true).findFirst();
+        points = user.getPoints();
+
+        /*timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (hours > 7 || hours < 15) {
+                    KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+                    if (myKM.inKeyguardRestrictedInputMode()) {
+                        points++;
+                    }
+                    displayPoints(points);
+                }
+            }
+        };*/
+
+        TextView ptsTextView = (TextView) findViewById(R.id.pts);
+        ptsTextView.setText(user.getPoints() + "points");
+
+        start();
 
         TextView couponsTextView = (TextView) findViewById(R.id.coupons);
         couponsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent couponsIntent = new Intent(MainActivity.this, CouponsActivity.class);
-                startActivity(couponsIntent);
+                Intent intent = new Intent();
+                intent.putExtra("email", userEmail);
+                intent.setClass(MainActivity.this, CouponsActivity.class);
+                startActivity(intent);
+
             }
         });
 
@@ -85,8 +89,11 @@ public class MainActivity extends AppCompatActivity {
         myDealsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myDealsIntent = new Intent(MainActivity.this, MyDealsActivity.class);
-                startActivity(myDealsIntent);
+                Intent i = new Intent();
+                i.putExtra("email", userEmail);
+                i.setClass(MainActivity.this, MyDealsActivity.class);
+                startActivity(i);
+
             }
         });
 
@@ -104,18 +111,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TextView ptsTextView = (TextView) findViewById(R.id.pts);
-        ptsTextView.setText(points + "points");
-
-        start();
+        TextView logOffTextView = (TextView) findViewById(R.id.logOff);
+        logOffTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent();
+                realm.beginTransaction();
+                user.setLoggedIn(false);
+                user.setPoints(points);
+                realm.copyToRealmOrUpdate(user);
+                realm.commitTransaction();
+                stop();
+                i.setClass(MainActivity.this, LogonActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     public void start() {
-        if (timer != null) {
-            return;
+        if (timerTask != null) {
+            timerTask.cancel();
         }
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (hours > 7 || hours < 15) {
+                    KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+                    if (myKM.inKeyguardRestrictedInputMode()) {
+                        points++;
+                    }
+                    displayPoints(points);
+                }
+            }
+        };
         timer = new Timer();
         timer.scheduleAtFixedRate(timerTask, 0, 2000);
+    }
+
+    public void stop() {
+        timer.cancel();
+        timerTask.cancel();
     }
 
     public void displayPoints(final int pts) {
@@ -129,8 +165,16 @@ public class MainActivity extends AppCompatActivity {
                     TextView ptsTextView = (TextView) findViewById(R.id.pts);
                     ptsTextView.setText(pts + " points");
                 }
+                realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                if (user.isLoggedIn()) {
+                    user.setPoints(points);
+                }
+                realm.copyToRealmOrUpdate(user);
+                realm.commitTransaction();
             }
         });
 
     }
+
 }
