@@ -6,6 +6,7 @@
         <item name="colorPrimary">#0868BE</item>
         <item name="colorPrimaryDark">#085090</item>
         <item name="colorAccent">#ffffff</item>
+
     </style>
 
     <style name="Theme.App.Base" parent="Theme.AppCompat.Light.DarkActionBar">

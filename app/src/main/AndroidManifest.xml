@@ -2,6 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.chargerpoints">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <receiver
+        android:name="com.aol.android.geofence.GeofenceReceiver"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="com.aol.android.geofence.ACTION_RECEIVE_GEOFENCE" />
+        </intent-filter>
+    </receiver>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -55,6 +65,7 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".GeofenceTransitionsIntentService" />
     </application>
 
 </manifest>

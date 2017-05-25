@@ -36,7 +36,5 @@ public class StartupActivity extends AppCompatActivity {
             i.setClass(StartupActivity.this, MainActivity.class);
             startActivity(i);
         }
-
-
     }
 }
