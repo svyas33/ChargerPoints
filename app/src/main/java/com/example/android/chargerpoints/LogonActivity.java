@@ -83,14 +83,60 @@ public class LogonActivity extends AppCompatActivity {
             }
         });
 
-        /*forgotPasswordButton = (Button) findViewById(R.id.forgot_password_button);
+        forgotPasswordButton = (Button) findViewById(R.id.forgot_password_button);
+        //Adding click listener
         forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(LogonActivity.this, forgotPassword(),
-                        Toast.LENGTH_LONG).show();
+                    sendEmail();
             }
-        });*/
+
+        });
+    }
+
+    private void sendEmail() {
+
+        if (isEmpty(emailEditText)) {
+            emailEditText.requestFocus();
+            emailEditText.selectAll();
+            Toast.makeText(LogonActivity.this, "Please enter an SHS email",
+                    Toast.LENGTH_LONG).show();
+            return;
+        } else {//spsd.us
+            if (emailEditText.getText().toString().contains("@")) {
+                email = String.valueOf(emailEditText.getText());
+            } else {
+                emailEditText.requestFocus();
+                emailEditText.selectAll();
+                Toast.makeText(LogonActivity.this, "Please enter a valid SHS email",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+
+        //Get user email from field in email spot
+        String email = emailEditText.getText().toString().trim();
+
+        //Email subject
+        String subject = "ChargerPoints Password Retrieval";
+
+        user = realm.where(User.class).equalTo("email", email).findFirst();
+
+        String message;
+        if(user != null) {
+            //Write message
+            message = "Your password for the ChargerPoints app is: " + user.getPassword();
+        }
+        else {
+            Toast.makeText(LogonActivity.this, "User does not exist. Please register",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        //Creating SendMail object
+        SendMail sm = new SendMail(this, email, subject, message);
+
+        //Executing sendmail to send email
+        sm.execute();
     }
 
     public String signIn() {
@@ -138,7 +184,7 @@ public class LogonActivity extends AppCompatActivity {
             emailEditText.requestFocus();
             emailEditText.selectAll();
             return "Please enter an email";
-        } else {
+        } else {//spsd.us
             if (emailEditText.getText().toString().contains("@")) {
                 email = String.valueOf(emailEditText.getText());
             } else {
@@ -172,31 +218,6 @@ public class LogonActivity extends AppCompatActivity {
         }
     }
 
-    /*public String forgotPassword() {
-        if(emailTextView.getText() != null) {
-            email = String.valueOf(emailTextView.getText());
-        } else {
-            return "Please enter an email so we can send you your password!";
-        }
-
-        user = realm.where(User.class).equalTo("email", email).findFirst();
-        if(user != null) {
-            Intent i = new Intent(Intent.ACTION_SEND);
-            i.setType("message/rfc822");
-            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{email});
-            i.putExtra(Intent.EXTRA_SUBJECT, "Password Request");
-            i.putExtra(Intent.EXTRA_TEXT   , "Your password for the ChargerPoints app is: " + user.getPassword());
-            try {
-                startActivity(Intent.createChooser(i, "Send mail..."));
-            } catch (android.content.ActivityNotFoundException ex) {
-                return "There are no email clients installed.";
-            }
-            return "An email with your password has been sent to " + email;
-        } else {
-            return "User does not exist. Please register.";
-        }
-    }*/
-
     private boolean isEmpty(EditText myeditText) {
         return myeditText.getText().toString().trim().length() == 0;
     }
@@ -205,36 +226,36 @@ public class LogonActivity extends AppCompatActivity {
 
         final Coupon foodCoupon1 = new Coupon();
         foodCoupon1.setId(1);
-        foodCoupon1.setCompanyName("JCPenney's");
-        foodCoupon1.setCouponValue("$10 off $25!");
-        foodCoupon1.setDescription("In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016");
-        foodCoupon1.setPicImageResourceId(R.drawable.jcplogo);
+        foodCoupon1.setCompanyName("Dunkin' Donuts");
+        foodCoupon1.setCouponValue("Free Donut");
+        foodCoupon1.setDescription("In Store Only. Any Variety. Up to $1.00 value. Expires 12/31/2017");
+        foodCoupon1.setPicImageResourceId(R.drawable.dunkindonuts);
         foodCoupon1.setQrImageResourceId(R.drawable.jcpqr);
-        foodCoupon1.setPts(15);
+        foodCoupon1.setPts(100);
         foodCoupon1.setCategory("food");
         allCoupons.add(foodCoupon1);
         foodCoupons.add(foodCoupon1);
 
         final Coupon foodCoupon2 = new Coupon();
         foodCoupon2.setId(2);
-        foodCoupon2.setCompanyName("JCPenney's");
-        foodCoupon2.setCouponValue("$10 off $25!");
-        foodCoupon2.setDescription("In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016");
-        foodCoupon2.setPicImageResourceId(R.drawable.jcplogo);
+        foodCoupon2.setCompanyName("McDonald's");
+        foodCoupon2.setCouponValue("Free Large Fries");
+        foodCoupon2.setDescription("In Store Only. Not valid at drive thru. Expires 12/31/2017");
+        foodCoupon2.setPicImageResourceId(R.drawable.mcdonalds);
         foodCoupon2.setQrImageResourceId(R.drawable.jcpqr);
-        foodCoupon2.setPts(15);
+        foodCoupon2.setPts(200);
         foodCoupon2.setCategory("food");
         allCoupons.add(foodCoupon2);
         foodCoupons.add(foodCoupon2);
 
         final Coupon foodCoupon3 = new Coupon();
         foodCoupon3.setId(3);
-        foodCoupon3.setCompanyName("JCPenney's");
-        foodCoupon3.setCouponValue("$10 off $25!");
-        foodCoupon3.setDescription("In Store and Online. Select apparel, shoes, accessories, fine jewelry & home. Expires 12/31/2016");
-        foodCoupon3.setPicImageResourceId(R.drawable.jcplogo);
+        foodCoupon3.setCompanyName("Subway");
+        foodCoupon3.setCouponValue("$3 off combo");
+        foodCoupon3.setDescription("In Store Only. Valid only with meal combos. Expires 12/31/2017");
+        foodCoupon3.setPicImageResourceId(R.drawable.subway);
         foodCoupon3.setQrImageResourceId(R.drawable.jcpqr);
-        foodCoupon3.setPts(15);
+        foodCoupon3.setPts(500);
         foodCoupon3.setCategory("food");
         allCoupons.add(foodCoupon3);
         foodCoupons.add(foodCoupon3);
