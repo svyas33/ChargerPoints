@@ -102,8 +102,8 @@ public class LogonActivity extends AppCompatActivity {
             Toast.makeText(LogonActivity.this, "Please enter an SHS email",
                     Toast.LENGTH_LONG).show();
             return;
-        } else {//spsd.us
-            if (emailEditText.getText().toString().contains("@")) {
+        } else {
+            if (emailEditText.getText().toString().contains("@spsd.us")) {
                 email = String.valueOf(emailEditText.getText());
             } else {
                 emailEditText.requestFocus();
@@ -146,7 +146,7 @@ public class LogonActivity extends AppCompatActivity {
             return "Please enter an email";
 
         } else {
-            if (emailEditText.getText().toString().contains("@")) {
+            if (emailEditText.getText().toString().contains("@spsd.us")) {
                 email = String.valueOf(emailEditText.getText());
             } else {
                 emailEditText.requestFocus();
@@ -184,8 +184,8 @@ public class LogonActivity extends AppCompatActivity {
             emailEditText.requestFocus();
             emailEditText.selectAll();
             return "Please enter an email";
-        } else {//spsd.us
-            if (emailEditText.getText().toString().contains("@")) {
+        } else {
+            if (emailEditText.getText().toString().contains("@spsd.us")) {
                 email = String.valueOf(emailEditText.getText());
             } else {
                 emailEditText.requestFocus();
