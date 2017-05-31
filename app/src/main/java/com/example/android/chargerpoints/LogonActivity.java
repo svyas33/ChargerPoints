@@ -224,13 +224,15 @@ public class LogonActivity extends AppCompatActivity {
 
     public void addNewCoupons() {
 
+        //colors for QR: darkest: 0868be, lightest: 2196f3, middle: 1e88e5
+
         final Coupon foodCoupon1 = new Coupon();
         foodCoupon1.setId(1);
         foodCoupon1.setCompanyName("Dunkin' Donuts");
         foodCoupon1.setCouponValue("Free Donut");
-        foodCoupon1.setDescription("In Store Only. Any Variety. Up to $1.00 value. Expires 12/31/2017");
+        foodCoupon1.setDescription("In Store Only. Any Variety. Up to $1.00 value. Expires 12/31/17");
         foodCoupon1.setPicImageResourceId(R.drawable.dunkindonuts);
-        foodCoupon1.setQrImageResourceId(R.drawable.jcpqr);
+        foodCoupon1.setQrImageResourceId(R.drawable.dunkinqr);
         foodCoupon1.setPts(100);
         foodCoupon1.setCategory("food");
         allCoupons.add(foodCoupon1);
@@ -240,9 +242,9 @@ public class LogonActivity extends AppCompatActivity {
         foodCoupon2.setId(2);
         foodCoupon2.setCompanyName("McDonald's");
         foodCoupon2.setCouponValue("Free Large Fries");
-        foodCoupon2.setDescription("In Store Only. Not valid at drive thru. Expires 12/31/2017");
+        foodCoupon2.setDescription("In Store Only. Not valid at drive thru. Expires 12/31/17");
         foodCoupon2.setPicImageResourceId(R.drawable.mcdonalds);
-        foodCoupon2.setQrImageResourceId(R.drawable.jcpqr);
+        foodCoupon2.setQrImageResourceId(R.drawable.mcdonaldsqr);
         foodCoupon2.setPts(200);
         foodCoupon2.setCategory("food");
         allCoupons.add(foodCoupon2);
@@ -252,9 +254,9 @@ public class LogonActivity extends AppCompatActivity {
         foodCoupon3.setId(3);
         foodCoupon3.setCompanyName("Subway");
         foodCoupon3.setCouponValue("$3 off combo");
-        foodCoupon3.setDescription("In Store Only. Valid only with meal combos. Expires 12/31/2017");
+        foodCoupon3.setDescription("In Store Only. Valid only with meal combos. Expires 12/31/17");
         foodCoupon3.setPicImageResourceId(R.drawable.subway);
-        foodCoupon3.setQrImageResourceId(R.drawable.jcpqr);
+        foodCoupon3.setQrImageResourceId(R.drawable.subwayqr);
         foodCoupon3.setPts(500);
         foodCoupon3.setCategory("food");
         allCoupons.add(foodCoupon3);
@@ -263,37 +265,37 @@ public class LogonActivity extends AppCompatActivity {
 
         Coupon entCoupon1 = new Coupon();
         entCoupon1.setId(10);
-        entCoupon1.setCompanyName("Movies");
-        entCoupon1.setDescription("Only in Store");
-        entCoupon1.setCouponValue("$5 off!");
-        entCoupon1.setPts(30);
+        entCoupon1.setCompanyName("AMC");
+        entCoupon1.setDescription("Valid only at Starplex Cinemas in East Brunswick. Expires 12/31/17");
+        entCoupon1.setCouponValue("Free small popcorn");
+        entCoupon1.setPts(1000);
         entCoupon1.setCategory("entertainment");
-        entCoupon1.setPicImageResourceId(R.drawable.jcplogo);
-        entCoupon1.setQrImageResourceId(R.drawable.jcpqr);
+        entCoupon1.setPicImageResourceId(R.drawable.amc);
+        entCoupon1.setQrImageResourceId(R.drawable.amcqr);
         allCoupons.add(entCoupon1);
         entCoupons.add(entCoupon1);
 
         Coupon entCoupon2 = new Coupon();
         entCoupon2.setId(20);
-        entCoupon2.setCompanyName("Movies");
-        entCoupon2.setDescription("Only in Store");
-        entCoupon2.setCouponValue("$5 off!");
-        entCoupon2.setPts(30);
+        entCoupon2.setCompanyName("Bowlero");
+        entCoupon2.setDescription("Valid for only one game. Not valid on holidays or weekends. Not valid with any other offers. Expires 12/31/17");
+        entCoupon2.setCouponValue("Free game");
+        entCoupon2.setPts(8000);
         entCoupon2.setCategory("entertainment");
-        entCoupon2.setPicImageResourceId(R.drawable.jcplogo);
-        entCoupon2.setQrImageResourceId(R.drawable.jcpqr);
+        entCoupon2.setPicImageResourceId(R.drawable.bowlero);
+        entCoupon2.setQrImageResourceId(R.drawable.bowleroqr);
         allCoupons.add(entCoupon2);
         entCoupons.add(entCoupon2);
 
         Coupon entCoupon3 = new Coupon();
         entCoupon3.setId(30);
-        entCoupon3.setCompanyName("Movies");
-        entCoupon3.setDescription("Only in Store");
-        entCoupon3.setCouponValue("$5 off!");
-        entCoupon3.setPts(30);
+        entCoupon3.setCompanyName("Six Flags");
+        entCoupon3.setDescription("Receive $20 off any one day adult admission to Six Flags Great Adventure. Not valid at any other Six Flags location. Expires 12/31/17");
+        entCoupon3.setCouponValue("$20 off!");
+        entCoupon3.setPts(10000);
         entCoupon3.setCategory("entertainment");
-        entCoupon3.setPicImageResourceId(R.drawable.jcplogo);
-        entCoupon3.setQrImageResourceId(R.drawable.jcpqr);
+        entCoupon3.setPicImageResourceId(R.drawable.sixflags);
+        entCoupon3.setQrImageResourceId(R.drawable.sixflagsqr);
         allCoupons.add(entCoupon3);
         entCoupons.add(entCoupon3);
 
@@ -301,36 +303,36 @@ public class LogonActivity extends AppCompatActivity {
         Coupon otherCoupon1 = new Coupon();
         otherCoupon1.setId(100);
         otherCoupon1.setCompanyName("Walmart");
-        otherCoupon1.setDescription("Save money");
+        otherCoupon1.setDescription("Save 10% on any one regularly priced item. Expires 12/31/17");
         otherCoupon1.setCouponValue("10% off");
-        otherCoupon1.setPts(40);
+        otherCoupon1.setPts(5000);
         otherCoupon1.setCategory("other");
-        otherCoupon1.setPicImageResourceId(R.drawable.jcplogo);
-        otherCoupon1.setQrImageResourceId(R.drawable.jcpqr);
+        otherCoupon1.setPicImageResourceId(R.drawable.walmart);
+        otherCoupon1.setQrImageResourceId(R.drawable.walmartqr);
         allCoupons.add(otherCoupon1);
         otherCoupons.add(otherCoupon1);
 
         Coupon otherCoupon2 = new Coupon();
         otherCoupon2.setId(200);
-        otherCoupon2.setCompanyName("Walmart");
-        otherCoupon2.setDescription("Save money");
-        otherCoupon2.setCouponValue("10% off");
-        otherCoupon2.setPts(40);
+        otherCoupon2.setCompanyName("Rite Aid");
+        otherCoupon2.setDescription("$5 off any $25 purchase or more. Not valid on clearance merchandise. Expires 12/31/17");
+        otherCoupon2.setCouponValue("$5 off");
+        otherCoupon2.setPts(6000);
         otherCoupon2.setCategory("other");
-        otherCoupon2.setPicImageResourceId(R.drawable.jcplogo);
-        otherCoupon2.setQrImageResourceId(R.drawable.jcpqr);
+        otherCoupon2.setPicImageResourceId(R.drawable.riteaid);
+        otherCoupon2.setQrImageResourceId(R.drawable.riteaidqr);
         allCoupons.add(otherCoupon2);
         otherCoupons.add(otherCoupon2);
 
         Coupon otherCoupon3 = new Coupon();
         otherCoupon3.setId(300);
-        otherCoupon3.setCompanyName("Walmart");
-        otherCoupon3.setDescription("Save money");
-        otherCoupon3.setCouponValue("10% off");
-        otherCoupon3.setPts(40);
+        otherCoupon3.setCompanyName("Michaels");
+        otherCoupon3.setDescription("50% off any one regularly priced item. Not valid on sale items. Expires 12/31/17");
+        otherCoupon3.setCouponValue("50% off");
+        otherCoupon3.setPts(3000);
         otherCoupon3.setCategory("other");
-        otherCoupon3.setPicImageResourceId(R.drawable.jcplogo);
-        otherCoupon3.setQrImageResourceId(R.drawable.jcpqr);
+        otherCoupon3.setPicImageResourceId(R.drawable.michaels);
+        otherCoupon3.setQrImageResourceId(R.drawable.michaelsqr);
         allCoupons.add(otherCoupon3);
         otherCoupons.add(otherCoupon3);
 
