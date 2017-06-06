@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements
         user = realm.where(User.class).equalTo("isLoggedIn", true).findFirst();
         points = user.getPoints();
 
-        /*timerTask = new TimerTask() {
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 if (hours > 7 || hours < 15) {
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements
                     displayPoints(points);
                 }
             }
-        };*/
+        };
 
         TextView ptsTextView = (TextView) findViewById(R.id.pts);
         ptsTextView.setText(user.getPoints() + "points");
@@ -327,11 +327,11 @@ public class MainActivity extends AppCompatActivity implements
     public void onResult(Status status) {
         if (status.isSuccess()) {
 
-            Toast.makeText(
+            /*Toast.makeText(
                     this,
                     "Geofences added",
                     Toast.LENGTH_SHORT
-            ).show();
+            ).show();*/
         } else {
             // Get the status code for the error and log it using a user-friendly message.
             String errorMessage = GeofenceErrorMessages.getErrorString(this,

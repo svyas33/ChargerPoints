@@ -115,7 +115,10 @@ public class IndividualCouponActivity extends AppCompatActivity {
 
                     realm.beginTransaction();
                     coupon.setCategory("used");
+                    User user = realm.where(User.class).equalTo("isLoggedIn", true).findFirst();
+                    user.removeFromRedeemedCoupons(coupon);
                     realm.copyToRealmOrUpdate(coupon);
+                    realm.copyToRealmOrUpdate(user);
                     realm.commitTransaction();
                     // Start timer
 

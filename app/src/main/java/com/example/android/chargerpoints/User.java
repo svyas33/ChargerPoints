@@ -93,6 +93,10 @@ public class User extends RealmObject {
         this.points = points;
     }
 
+    public void removeFromRedeemedCoupons(Coupon coupon) {
+        this.redeemedCoupons.remove(coupon);
+    }
+
     public void removeFromFoodCoupons(Coupon coupon) {
         this.foodCoupons.remove(coupon);
     }
