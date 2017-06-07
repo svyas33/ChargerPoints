@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements
      */
     private SharedPreferences mSharedPreferences;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,19 +79,6 @@ public class MainActivity extends AppCompatActivity implements
 
         user = realm.where(User.class).equalTo("isLoggedIn", true).findFirst();
         points = user.getPoints();
-
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                if (hours > 7 || hours < 15) {
-                    KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-                    if (myKM.inKeyguardRestrictedInputMode()) {
-                        points++;
-                    }
-                    displayPoints(points);
-                }
-            }
-        };
 
         TextView ptsTextView = (TextView) findViewById(R.id.pts);
         ptsTextView.setText(user.getPoints() + "points");
@@ -166,12 +152,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-
-        /*if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_DENIED) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 101);
-        }*/
-
         // Empty list for storing geofences.
         mGeofenceList = new ArrayList<Geofence>();
 
@@ -193,10 +173,7 @@ public class MainActivity extends AppCompatActivity implements
         buildGoogleApiClient();
     }
 
-
-    /**
-     * Builds a GoogleApiClient. Uses the {@code #addApi} method to request the LocationServices API.
-     */
+    /* Builds a GoogleApiClient. Uses the {@code #addApi} method to request the LocationServices API. */
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -209,7 +186,6 @@ public class MainActivity extends AppCompatActivity implements
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
-
     }
 
     @Override
@@ -218,9 +194,7 @@ public class MainActivity extends AppCompatActivity implements
         mGoogleApiClient.disconnect();
     }
 
-    /**
-     * Runs when a GoogleApiClient object successfully connects.
-     */
+    /* Runs when a GoogleApiClient object successfully connects. */
     @Override
     public void onConnected(Bundle connectionHint) {
         Log.i(TAG, "Connected to GoogleApiClient");
@@ -242,10 +216,8 @@ public class MainActivity extends AppCompatActivity implements
         // onConnected() will be called again automatically when the service reconnects
     }
 
-    /**
-     * Builds and returns a GeofencingRequest. Specifies the list of geofences to be monitored.
-     * Also specifies how the geofence notifications are initially triggered.
-     */
+    /* Builds and returns a GeofencingRequest. Specifies the list of geofences to be monitored.
+     * Also specifies how the geofence notifications are initially triggered.*/
     private GeofencingRequest getGeofencingRequest() {
         GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
 
@@ -261,10 +233,8 @@ public class MainActivity extends AppCompatActivity implements
         return builder.build();
     }
 
-    /**
-     * Adds geofences, which sets alerts to be notified when the device enters or exits one of the
-     * specified geofences. Handles the success or failure results returned by addGeofences().
-     */
+    /* Adds geofences, which sets alerts to be notified when the device enters or exits one of the
+     * specified geofences. Handles the success or failure results returned by addGeofences(). */
     public void addGeofencesButtonHandler() {
         if (!mGoogleApiClient.isConnected()) {
             Toast.makeText(this, getString(R.string.not_connected), Toast.LENGTH_SHORT).show();
@@ -287,43 +257,19 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Removes geofences, which stops further notifications when the device enters or exits
-     * previously registered geofences.
-     */
-    public void removeGeofencesButtonHandler() {
-        if (!mGoogleApiClient.isConnected()) {
-            Toast.makeText(this, getString(R.string.not_connected), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        try {
-            // Remove geofences.
-            LocationServices.GeofencingApi.removeGeofences(
-                    mGoogleApiClient,
-                    // This is the same pending intent that was used in addGeofences().
-                    getGeofencePendingIntent()
-            ).setResultCallback(this); // Result processed in onResult().
-        } catch (SecurityException securityException) {
-            // Catch exception generated if the app does not use ACCESS_FINE_LOCATION permission.
-            logSecurityException(securityException);
-        }
-    }
-
     private void logSecurityException(SecurityException securityException) {
         Log.e(TAG, "Invalid location permission. " +
                 "You need to use ACCESS_FINE_LOCATION with geofences", securityException);
     }
 
-    /**
-     * Runs when the result of calling addGeofences() and removeGeofences() becomes available.
+    /* Runs when the result of calling addGeofences() and removeGeofences() becomes available.
      * Either method can complete successfully or with an error.
      * <p>
      * Since this activity implements the {@link ResultCallback} interface, we are required to
      * define this method.
      *
      * @param status The Status returned through a PendingIntent when addGeofences() or
-     *               removeGeofences() get called.
-     */
+     *               removeGeofences() get called.*/
     public void onResult(Status status) {
         if (status.isSuccess()) {
 
@@ -340,13 +286,11 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Gets a PendingIntent to send with the request to add or remove Geofences. Location Services
+    /* Gets a PendingIntent to send with the request to add or remove Geofences. Location Services
      * issues the Intent inside this PendingIntent whenever a geofence transition occurs for the
      * current list of geofences.
      *
-     * @return A PendingIntent for the IntentService that handles geofence transitions.
-     */
+     * @return A PendingIntent for the IntentService that handles geofence transitions.   */
     private PendingIntent getGeofencePendingIntent() {
         // Reuse the PendingIntent if we already have it.
         if (mGeofencePendingIntent != null) {
@@ -358,10 +302,8 @@ public class MainActivity extends AppCompatActivity implements
         return temp;
     }
 
-    /**
-     * This sample hard codes geofence data. A real app might dynamically create geofences based on
-     * the user's location.
-     */
+    /* This sample hard codes geofence data. A real app might dynamically create geofences based on
+     * the user's location. */
     public void populateGeofenceList() {
         for (Map.Entry<String, LatLng> entry : Constants.SPOTSWOOD_LANDMARKS.entrySet()) {
 
@@ -390,14 +332,6 @@ public class MainActivity extends AppCompatActivity implements
                     .build());
         }
     }
-
-    
-
-
-
-
-
-
 
     public void start() {
         if (timerTask != null) {
@@ -446,7 +380,5 @@ public class MainActivity extends AppCompatActivity implements
                 realm.commitTransaction();
             }
         });
-
     }
-
 }
